@@ -1,0 +1,25 @@
+<div class="row">
+
+  <div class="col-9">
+    <p class="h6 d-flex justify-content-between">
+      {{ question.question }}
+      <span class="badge bg-primary">{{ question.voted_up.length }}</span>
+    </p>
+
+    <p>
+      <small>Asked by <cite title="{{ question.submitted_by}}">{{ question.submitted_by}}</cite></small>
+    </p>
+
+  </div>
+  <div class="col-3">
+
+    <button type="button" class="btn" [ngClass]="upButtonClass" (click)="vote(true)" [disabled]="buttonDisabled">
+      <fa-icon [icon]="thumbsUpIcon"></fa-icon>
+    </button>
+
+    <button type="button" class="btn ms-2" [ngClass]="downButtonClass" (click)="vote(false)" [disabled]="buttonDisabled">
+
+      <fa-icon [icon]="thumbsDownIcon"></fa-icon>
+    </button>
+  </div>
+</div>

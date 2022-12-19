@@ -1,0 +1,22 @@
+<div class="row mt-3">
+  <div class="col">
+    <app-ask (newQuestion)="addNewQuestion($event)"></app-ask>
+  </div>
+</div>
+
+<div class="card mt-3" *ngIf="!!questions">
+  <div class="card-body" *ngIf="questions.length === 0">
+    <p>No Question for this topic as of now</p>
+  </div>
+
+  <ul class="list-group" *ngIf="questions.length > 0">
+
+    <li class="list-group-item" *ngFor="let question of questions">
+
+      <app-question [question]="question" [username]="username"></app-question>
+
+    </li>
+
+  </ul>
+
+</div>

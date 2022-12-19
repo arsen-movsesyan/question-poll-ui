@@ -1,0 +1,33 @@
+<div class="card">
+  <div class="card-header text-white bg-primary">
+    Ask Your Question
+  </div>
+
+  <div class="card-body">
+    <p class="card-text" *ngIf="!username">Please authenticate yourself to be able to ask questions</p>
+    <form [formGroup]="questionFormGroup" (ngSubmit)="submitQuestion()" *ngIf="!!username">
+      <div class="mb-3">
+        <textarea class="form-control" id="questionBodyID" formControlName="questionBody" aria-describedby="questionHelp"></textarea>
+        <div id="questionHelp" class="form-text">Here is a help for asking the question.</div>
+      </div>
+
+      <div class="row g-3">
+        <div class="mb-3 col-2">
+          <label for="topicId" class="form-label">Choose Topic</label>
+        </div>
+        <div class="col-6">
+
+          <select id="topicId" class="form-select" formControlName="preferredTopic">
+            <option *ngFor="let topic of topics" [value]="topic.id">{{ topic.topic|titlecase }}</option>
+          </select>
+        </div>
+        <div class="col-auto">
+
+          <button type="submit" class="btn btn-primary" [disabled]="questionFormGroup.invalid">Submit</button>
+        </div>
+
+      </div>
+
+    </form>
+  </div>
+</div>
