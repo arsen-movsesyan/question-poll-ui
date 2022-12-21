@@ -13,11 +13,12 @@
   </header>
 
 <!--  <button type="button" class="btn btn-success" (click)="tmpPostQuestions()">Tmp PostQ</button>-->
+  <app-spinner message="Loading Topics" *ngIf="showSpinner" (dismiss)="showSpinner=false"></app-spinner>
   <ul class="nav justify-content-center" *ngIf="!!topics">
     <li class="nav-item" *ngFor="let topic of topics">
       <a
         class="nav-link"
-        [ngClass]="topic === selectedTopic ? 'active font-weight-bold' : '' "
+        [ngClass]="topic === selectedTopic ? 'active fw-bold' : '' "
         (click)="onSelectTopic(topic.id)"
         style="cursor: pointer"
       >{{ topic.topic | titlecase }}</a>

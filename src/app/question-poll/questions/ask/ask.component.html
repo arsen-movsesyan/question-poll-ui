@@ -12,16 +12,12 @@
       </div>
 
       <div class="row g-3">
-        <div class="mb-3 col-2">
-          <label for="topicId" class="form-label">Choose Topic</label>
-        </div>
-        <div class="col-6">
 
-          <select id="topicId" class="form-select" formControlName="preferredTopic">
-            <option *ngFor="let topic of topics" [value]="topic.id">{{ topic.topic|titlecase }}</option>
-          </select>
+        <div class="mb-3 col-2">
+          <p>Category <span><strong>{{ currentTopic? currentTopic.topic : '' }}</strong></span></p>
         </div>
-        <div class="col-auto">
+
+        <div class="col-auto offset-3">
 
           <button type="submit" class="btn btn-primary" [disabled]="questionFormGroup.invalid">Submit</button>
         </div>

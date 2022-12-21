@@ -1,0 +1,8 @@
+<div class="d-flex justify-content-center align-items-center" *ngIf="displaySpinner">
+  <span class="mr-2">{{ message }}...</span>
+  <span class="spinner-border ml-2" [ngClass]="colorClass" role="status">
+    <span class="sr-only">Loading...</span>
+  </span>
+</div>
+
+<ngb-alert type="warning" (close)="close()" *ngIf="!displaySpinner">An error has occurred. Please try again later or contact site admin.</ngb-alert>

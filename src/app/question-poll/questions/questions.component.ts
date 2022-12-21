@@ -10,9 +10,10 @@ import {QuestionPollService} from "../../question-poll.service";
   styleUrls: ['./questions.component.css']
 })
 export class QuestionsComponent implements OnInit {
-  questions: Question[] = [];
+  questions: Question[] | null;
   currentTopic: Topic;
   username: string|null;
+  showSpinner = false;
 
   constructor(
     private authService: AuthService,
@@ -23,9 +24,12 @@ export class QuestionsComponent implements OnInit {
     });
     this.questionService.currentTopicSubj.subscribe(selectedTopic => {
       this.currentTopic = selectedTopic;
+      this.showSpinner = true;
+      this.questions = null;
       this.questionService.getQuestionByTopic(this.currentTopic.id)
         .subscribe((questions: Question[]) => {
           this.questions = questions;
+          this.showSpinner = false;
         });
     });
   }
@@ -34,6 +38,10 @@ export class QuestionsComponent implements OnInit {
   }
 
   addNewQuestion(newQuestion: Question) {
-    this.questions.push(newQuestion);
+    if (!this.questions) {
+      this.questions = [newQuestion];
+    } else {
+      this.questions.push(newQuestion);
+    }
   }
 }

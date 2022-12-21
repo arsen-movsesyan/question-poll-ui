@@ -3,7 +3,6 @@
   <div class="col-9">
     <p class="h6 d-flex justify-content-between">
       {{ question.question }}
-      <span class="badge bg-primary">{{ question.voted_up.length }}</span>
     </p>
 
     <p>
@@ -15,6 +14,7 @@
 
     <button type="button" class="btn" [ngClass]="upButtonClass" (click)="vote(true)" [disabled]="buttonDisabled">
       <fa-icon [icon]="thumbsUpIcon"></fa-icon>
+      <span class="badge bg-success">{{ question.voted_up.length }}</span>
     </button>
 
     <button type="button" class="btn ms-2" [ngClass]="downButtonClass" (click)="vote(false)" [disabled]="buttonDisabled">

@@ -10,19 +10,21 @@ import {QuestionPollService} from "../question-poll.service";
 export class QuestionPollComponent implements OnInit {
   selectedTopic: Topic;
   // questions: any;
-
+  showSpinner = true;
   topics: Topic[];
 
 
   constructor(
     private questionService: QuestionPollService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.questionService.getAllTopics()
       .subscribe((allTopics: Topic[]) => {
         this.topics = allTopics;
         this.selectedTopic = this.topics[0];
+        this.questionService.currentTopicSubj.next(this.selectedTopic);
+        this.showSpinner = false;
       })
 
   }

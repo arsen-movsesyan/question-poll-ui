@@ -18,6 +18,8 @@ import {fetchAuthTokenFromLocalStorage} from "./static-utils";
 import {JWT_ALLOWED_DOMAINS, JWT_DISALLOWED_ROUTES} from "./urls";
 import {HttpClientModule} from "@angular/common/http";
 import { AskComponent } from './question-poll/questions/ask/ask.component';
+import {HashLocationStrategy, LocationStrategy} from "@angular/common";
+import { SpinnerComponent } from './spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { AskComponent } from './question-poll/questions/ask/ask.component';
     QuestionPollComponent,
     QuestionsComponent,
     QuestionComponent,
-    AskComponent
+    AskComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -47,6 +50,7 @@ import { AskComponent } from './question-poll/questions/ask/ask.component';
     HttpClientModule
   ],
   providers: [
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
     QuestionPollService,
     AuthService
   ],

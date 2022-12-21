@@ -14,7 +14,8 @@ export class AskComponent implements OnInit {
   @Output() newQuestion: EventEmitter<Question> = new EventEmitter<Question>();
   username: string|null;
   questionFormGroup: FormGroup;
-  topics: Topic[];
+  showSpinner = false;
+  currentTopic: Topic;
 
   constructor(
     private authService: AuthService,
@@ -23,25 +24,24 @@ export class AskComponent implements OnInit {
     this.authService.isAuth.subscribe(authenticated => {
       this.username = authenticated ? this.authService.getUser() : null;
     });
+    this.questionService.currentTopicSubj.subscribe(t => this.currentTopic = t);
   }
 
   ngOnInit(): void {
-    this.questionService.getAllTopics()
-      .subscribe((allTopics: Topic[]) => {
-        this.topics = allTopics;
-      })
     this.questionFormGroup = new FormGroup({
       questionBody: new FormControl(null, [Validators.required, Validators.minLength(20)]),
-      preferredTopic: new FormControl(null, Validators.required)
     });
   }
 
   submitQuestion() {
     const questionBody = this.questionFormGroup.value.questionBody;
-    const topicId = +this.questionFormGroup.value.preferredTopic;
+    const topicId = this.currentTopic.id;
+    this.showSpinner = true;
     this.questionService.askQuestion(questionBody, topicId)
       .subscribe((addedQuestion: Question) => {
         this.newQuestion.emit(addedQuestion);
+        this.questionFormGroup.reset();
+        this.showSpinner = false;
       });
   }
 }
