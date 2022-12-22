@@ -1,7 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {AuthService} from "../../../auth.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Topic} from "../../../models/topic.model";
 import {QuestionPollService} from "../../../question-poll.service";
 import {Question} from "../../../models/question.model";
 
@@ -15,7 +14,6 @@ export class AskComponent implements OnInit {
   username: string|null;
   questionFormGroup: FormGroup;
   showSpinner = false;
-  currentTopic: Topic;
 
   constructor(
     private authService: AuthService,
@@ -24,7 +22,6 @@ export class AskComponent implements OnInit {
     this.authService.isAuth.subscribe(authenticated => {
       this.username = authenticated ? this.authService.getUser() : null;
     });
-    this.questionService.currentTopicSubj.subscribe(t => this.currentTopic = t);
   }
 
   ngOnInit(): void {
@@ -35,9 +32,8 @@ export class AskComponent implements OnInit {
 
   submitQuestion() {
     const questionBody = this.questionFormGroup.value.questionBody;
-    const topicId = this.currentTopic.id;
     this.showSpinner = true;
-    this.questionService.askQuestion(questionBody, topicId)
+    this.questionService.askQuestion(questionBody)
       .subscribe((addedQuestion: Question) => {
         this.newQuestion.emit(addedQuestion);
         this.questionFormGroup.reset();

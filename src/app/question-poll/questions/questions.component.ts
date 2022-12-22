@@ -1,6 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Question} from "../../models/question.model";
-import {Topic} from "../../models/topic.model";
 import {AuthService} from "../../auth.service";
 import {QuestionPollService} from "../../question-poll.service";
 
@@ -11,7 +10,6 @@ import {QuestionPollService} from "../../question-poll.service";
 })
 export class QuestionsComponent implements OnInit {
   questions: Question[] | null;
-  currentTopic: Topic;
   username: string|null;
   showSpinner = false;
 
@@ -21,16 +19,6 @@ export class QuestionsComponent implements OnInit {
   ) {
     this.authService.isAuth.subscribe(authenticated => {
       this.username = authenticated ? this.authService.getUser() : null;
-    });
-    this.questionService.currentTopicSubj.subscribe(selectedTopic => {
-      this.currentTopic = selectedTopic;
-      this.showSpinner = true;
-      this.questions = null;
-      this.questionService.getQuestionByTopic(this.currentTopic.id)
-        .subscribe((questions: Question[]) => {
-          this.questions = questions;
-          this.showSpinner = false;
-        });
     });
   }
 
